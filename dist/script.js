@@ -14001,8 +14001,57 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/slider.js");
+/* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
 
-alert(1);
+
+window.addEventListener('DOMContentLoaded', function () {
+  Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
+});
+
+/***/ }),
+
+/***/ "./src/js/modules/modals.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/modals.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var modals = function modals() {
+  function bindModal(triger, modal, close) {
+    triger.addEventListener('click', function (event) {
+      //Проверяем на существование объекта Event
+      if (event.target) {
+        //если событие не обрабатывается явно, его действие по умолчанию не должно выполняться
+        event.preventDefault();
+      } //Делаем модальное окно блочным элементом
+
+
+      modal.style.display = "block"; //Когда модальное окно открыто, можем листать только модальное окно, если занимает больше нашего экрана по высоте, если нет, страница замораживается
+
+      document.body.style.overflow = "hidden";
+    });
+    close.addEventListener('click', function () {
+      //Убираем дисплей
+      modal.style.display = "none"; //Возвращаем стандартное значение
+
+      document.body.style.overflow = "";
+    });
+  } //Триггер, по которому будет тыкать пользователь
+
+
+  var callEngineerBtn = document.querySelector('.popup_engineer_btn'); //Модальное окно, которое будет показываться
+
+  var modalEngineer = document.querySelector('.popup_engineer'); //Крестик внутри модального окна, нажимая на который, модальное окно будет закрываться | Прописываем чётко, что внутри модального окна, есть этот крестик
+
+  var modalEngineerClose = document.querySelector('.popup_engineer .popup_close'); //Запускаем нашу функцию и говорим ей, что будем использовать 3 аргумента
+
+  bindModal(callEngineerBtn, modalEngineer, modalEngineerClose);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (modals);
 
 /***/ }),
 
