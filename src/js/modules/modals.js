@@ -1,16 +1,28 @@
 const modals = () => {
-    function bindModal(triger, modal, close) {
-        triger.addEventListener('click', (event) => {
-            //Проверяем на существование объекта Event
-            if (event.target) {
-                //если событие не обрабатывается явно, его действие по умолчанию не должно выполняться
-                event.preventDefault();
-            }
+    function bindModal(triggerSelector, modalSelector, closeSelector) {
 
-            //Делаем модальное окно блочным элементом
-            modal.style.display = "block";
-            //Когда модальное окно открыто, можем листать только модальное окно, если занимает больше нашего экрана по высоте, если нет, страница замораживается
-            document.body.style.overflow = "hidden";
+        //Триггер на несколько одинаковых элементов, с одинаковым селектором повесить одни и те же функции
+        const trigger = document.querySelectorAll(triggerSelector);
+        //Модальное окно, которое будет показываться
+
+        const modal = document.querySelector(modalSelector);
+        //Крестик внутри модального окна, нажимая на который, модальное окно будет закрываться 
+        const close = document.querySelector(closeSelector);
+
+        //item - каждый триггер, на который будем вешать обработчик событий
+        trigger.forEach(item => {
+            item.addEventListener('click', (event) => {
+                //Проверяем на существование объекта Event
+                if (event.target) {
+                    //если событие не обрабатывается явно, его действие по умолчанию не должно выполняться
+                    event.preventDefault();
+                }
+
+                //Делаем модальное окно блочным элементом
+                modal.style.display = "block";
+                //Когда модальное окно открыто, можем листать только модальное окно, если занимает больше нашего экрана по высоте, если нет, страница замораживается
+                document.body.style.overflow = "hidden";
+            });
         });
 
         close.addEventListener('click', () => {
@@ -31,17 +43,10 @@ const modals = () => {
         });
     }
 
-    //Триггер, по которому будет тыкать пользователь
-    const callEngineerBtn = document.querySelector('.popup_engineer_btn');
-
-    //Модальное окно, которое будет показываться
-    const modalEngineer = document.querySelector('.popup_engineer');
-
-    //Крестик внутри модального окна, нажимая на который, модальное окно будет закрываться | Прописываем чётко, что внутри модального окна, есть этот крестик
-    const modalEngineerClose = document.querySelector('.popup_engineer .popup_close');
-
-    //Запускаем нашу функцию и говорим ей, что будем использовать 3 аргумента
-    bindModal(callEngineerBtn, modalEngineer, modalEngineerClose);
+    //Передаём селекторы 
+    // Триггер | Модальное окно | Кнопка закрытия модального окна
+    bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
+    bindModal('.phone_link', '.popup', '.popup .popup_close');
 
 };
 
