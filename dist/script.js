@@ -14039,6 +14039,15 @@ var modals = function modals() {
 
       document.body.style.overflow = "";
     });
+    modal.addEventListener('click', function () {
+      //Кликая вне модального окна, окно закрывается
+      if (event.target === modal) {
+        //Убираем дисплей
+        modal.style.display = "none"; //Возвращаем стандартное значение
+
+        document.body.style.overflow = "";
+      }
+    });
   } //Триггер, по которому будет тыкать пользователь
 
 

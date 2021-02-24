@@ -19,11 +19,21 @@ const modals = () => {
             //Возвращаем стандартное значение
             document.body.style.overflow = "";
         });
+
+        modal.addEventListener('click', () => {
+            //Кликая вне модального окна, окно закрывается
+            if (event.target === modal) {
+                //Убираем дисплей
+                modal.style.display = "none";
+                //Возвращаем стандартное значение
+                document.body.style.overflow = "";
+            }
+        });
     }
 
     //Триггер, по которому будет тыкать пользователь
     const callEngineerBtn = document.querySelector('.popup_engineer_btn');
-    
+
     //Модальное окно, которое будет показываться
     const modalEngineer = document.querySelector('.popup_engineer');
 
