@@ -14896,12 +14896,25 @@ var modals = function modals() {
         document.body.style.overflow = "";
       }
     });
+  } //Модальное окно,появляющееся каждые 60 сек
+
+
+  function showModelByTime(selector, time) {
+    setTimeout(function () {
+      document.querySelector(selector).style.display = "block"; //Когда модальное окно открыто, можем листать только модальное окно, если занимает больше нашего экрана по высоте, если нет, страница замораживается
+
+      document.body.style.overflow = "hidden";
+    }, time);
   } //Передаём селекторы 
   // Триггер | Модальное окно | Кнопка закрытия модального окна
+  //Вызвать замерщика
 
 
-  bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
-  bindModal('.phone_link', '.popup', '.popup .popup_close');
+  bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close'); //Заказать звонок
+
+  bindModal('.phone_link', '.popup', '.popup .popup_close'); //Модальное окно,появляющееся каждые 60 сек
+
+  showModelByTime('.popup', 60000);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
