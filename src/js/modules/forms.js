@@ -2,6 +2,13 @@ const forms = () => {
     //Получаем элементы,которые нам понадобятся
     const form = document.querySelectorAll('form');
     const inputs = document.querySelectorAll('input');
+    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+
+    phoneInputs.forEach(item => {
+        item.addEventListener('input', () => {
+            item.value = item.value.replace(/\D/, '');
+        });
+    });
 
     //Создаём объект сообщения, которые будут показываться пользователю
     const message = {
