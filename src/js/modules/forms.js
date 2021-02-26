@@ -2,8 +2,9 @@ const forms = () => {
     //Получаем элементы,которые нам понадобятся
     const form = document.querySelectorAll('form');
     const inputs = document.querySelectorAll('input');
-    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+    const phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
+    //Удаляем все значения, которые будут не числами
     phoneInputs.forEach(item => {
         item.addEventListener('input', () => {
             item.value = item.value.replace(/\D/, '');
