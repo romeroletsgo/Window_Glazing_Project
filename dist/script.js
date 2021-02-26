@@ -15499,7 +15499,8 @@ var modals = function modals() {
         } //Делаем модальное окно блочным элементом
 
 
-        modal.style.display = "block"; //Когда модальное окно открыто, можем листать только модальное окно, если занимает больше нашего экрана по высоте, если нет, страница замораживается
+        modal.style.display = "block"; //Когда модальное окно открыто, можем листать только модальное окно
+        //Если занимает больше нашего экрана по высоте, если нет, страница замораживается
 
         document.body.style.overflow = "hidden";
       });
@@ -15524,7 +15525,8 @@ var modals = function modals() {
 
   function showModelByTime(selector, time) {
     setTimeout(function () {
-      document.querySelector(selector).style.display = "block"; //Когда модальное окно открыто, можем листать только модальное окно, если занимает больше нашего экрана по высоте, если нет, страница замораживается
+      document.querySelector(selector).style.display = "block"; //Когда модальное окно открыто, можем листать только модальное окно
+      //Eсли занимает больше нашего экрана по высоте, если нет, страница замораживается
 
       document.body.style.overflow = "hidden";
     }, time);
