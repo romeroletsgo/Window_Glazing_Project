@@ -17797,18 +17797,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+
 
 
 
 
 window.addEventListener('DOMContentLoaded', function () {
-  "use strict";
+  "use strict"; //timer deadline
 
+  var deadline = '2021-04-01';
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  Object(_modules_timer__WEBPACK_IMPORTED_MODULE_4__["default"])('.container1', deadline);
 });
 
 /***/ }),
@@ -18064,6 +18068,95 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (tabs);
+
+/***/ }),
+
+/***/ "./src/js/modules/timer.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/timer.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//id - Какой элемент будем рендерить
+//deadline - до какого времени будет идти таймер
+var timer = function timer(id, deadline) {
+  //Функция добавляющая ноль к числу
+  //Когда пытаемся записать какое-то значение внутрь блока, сначала пропускаем через эту функцию
+  var addZero = function addZero(num) {
+    if (num <= 9) {
+      return '0' + num;
+    } else {
+      return num;
+    }
+  }; //Функция принимает получает deadline и выдаёт время которое осталось до конца акции
+
+
+  var getTimeRemaining = function getTimeRemaining(endtime) {
+    //Время в JS исчесляется в миллисекундах
+    //Получаем разницу между временем endtime и временем, которое сейчас
+    var time = Date.parse(endtime) - Date.parse(new Date()); //Переводим кол-во миллисекунд в секунды и округляем число
+
+    var seconds = Math.floor(time / 1000 % 60); //Вычисляем кол-во минут
+
+    var minutes = Math.floor(time / 1000 / 60 % 60); //Вычисляем кол-во часов
+
+    var hours = Math.floor(time / (1000 * 60 * 60) % 24); //Вычисляем кол-во дней
+
+    var days = Math.floor(time / (1000 * 60 * 60 * 24)); //Возращаем ранее высчитанные значения в виде объекта
+
+    return {
+      //Здесь содержится всё время
+      'total': time,
+      //Кол-во дней
+      'days': days,
+      //Кол-во часов
+      'hours': hours,
+      //Кол-во минут
+      'minutes': minutes,
+      //Кол-во секунд
+      'seconds': seconds
+    };
+  }; //Функция отвечающая за то, что определенное значение 
+  //помещаем в определенные элементы у нас на странице
+
+
+  var setClock = function setClock(selector, endtime) {
+    var timer = document.querySelector(selector);
+    var days = timer.querySelector("#days");
+    var hours = timer.querySelector("#hours");
+    var minutes = timer.querySelector("#minutes");
+    var seconds = timer.querySelector("#seconds");
+    var timeInterval = setInterval(updateClock, 1000); //Вызываем функцию вручную, ещё до того как она запустится при помощи setInterval
+
+    updateClock(); //Определяем сколько времени осталось до deadline
+
+    function updateClock() {
+      //Возвращаем объект со всеми данными
+      var time = getTimeRemaining(endtime); //Запиливаем значение в блок на экране
+
+      days.textContent = addZero(time.days);
+      hours.textContent = addZero(time.hours);
+      minutes.textContent = addZero(time.minutes);
+      seconds.textContent = addZero(time.seconds); //Устанавливаем значение в нули, останавливаем таймер
+
+      if (time.total <= 0) {
+        days.textContent = "00";
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00"; //Останавливаем наш интервал
+
+        clearInterval(timeInterval);
+      }
+    }
+  };
+
+  setClock(id, deadline);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (timer);
 
 /***/ }),
 
